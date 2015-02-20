@@ -2,16 +2,14 @@ package diapositivas;
 
 public class Contactos {
 	private String nombre;
-	private int edad;
 	private int telefono;
 	/**
 	 * @param nombre
 	 * @param edad
 	 * @param telefono
 	 */
-	public Contactos(String nombre, int edad, int telefono) {
+	public Contactos(String nombre, int telefono) {
 		this.nombre = nombre;
-		this.edad = edad;
 		this.telefono = telefono;
 	}
 	public String getNombre() {
@@ -19,12 +17,6 @@ public class Contactos {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public int getEdad() {
-		return edad;
-	}
-	public void setEdad(int edad) {
-		this.edad = edad;
 	}
 	public int getTelefono() {
 		return telefono;
@@ -34,8 +26,8 @@ public class Contactos {
 	}
 	@Override
 	public String toString() {
-		return "Contactos [nombre=" + nombre + ", edad=" + edad + ", telefono="
-				+ telefono + "]";
+		return "Contactos [nombre=" + nombre + ", telefono="
+				+ telefono + "]\n";
 	}
 	
 }

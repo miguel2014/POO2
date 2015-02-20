@@ -39,12 +39,21 @@ public class Agenda {
 	 * @param telefono nuevo numero
 	 */
 	public void actualizarTelefono(Contactos c,int telefono){
-		if (this.existsContacto(c))
-			c.setTelefono(telefono);
-	}
+		if (this.existsContacto(c)){
+			for (Contactos contactos : lista) {
+				if (contactos.equals(c)) {
+					contactos.setTelefono(telefono);
+				}
+			}
+		}	}
 	public void actualizarNombre(Contactos c,String nombre){
-		if (this.existsContacto(c))
-			c.setNombre(nombre);
+		if (this.existsContacto(c)){
+			for (Contactos contactos : lista) {
+				if (contactos.equals(c)) {
+					contactos.setNombre(nombre);
+				}
+			}
+		}
 	}
 	@Override
 	public String toString() {
