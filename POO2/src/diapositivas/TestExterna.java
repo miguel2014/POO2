@@ -11,6 +11,7 @@ public class TestExterna {
 		System.out.println(e1.devuelveTres());
 		int numero3=new Externa().devuelveTres();
 		System.out.println(numero3);
+		//int in =(e1).devuelveTres();	
 	}
 }
 class Externa{
@@ -31,5 +32,14 @@ class Externa{
 	public int devuelveTres(){
 		return 3;
 	}
-	
+	//Clase interna no estatica de instancia
+	public class Interna{
+		public Interna(){
+			System.out.println("Creado Interna");
+		}
+		public int devuelveOtroTres(){
+			return 3;
+			}
+	}
 }
+	
