@@ -1,25 +1,37 @@
 package ejercicios;
 
+import java.time.LocalDate;
+
 public class CuentaBancaria {
+	private String cc;
 	private String numeroCuenta;
 	private double saldo;
 	private double interes;
-	private int fechaCreacion;
+	private LocalDate fechaCreacion;
 	private static int numeroCuentas;
+	private static final String entidad="1234";
+	private static final String oficina="5678";
 	
-	public CuentaBancaria(double saldo, double interes,
-			int fechaCreacion) {
+	//Constructores
+	
+	public CuentaBancaria(double saldo, double interes
+			) {
+		this.cc=crearNumeroCuenta();
+		this.numeroCuenta=numeroCuenta();
 		this.saldo = saldo;
 		this.interes = interes;
-		this.fechaCreacion = fechaCreacion;
+		this.fechaCreacion = LocalDate.now();
 		numeroCuentas++;
 	}
-	public CuentaBancaria(int fechaCreacion) {
+	public CuentaBancaria() {
+		this.cc=crearNumeroCuenta();
+		this.numeroCuenta=numeroCuenta();
 		this.saldo =0;
 		this.interes = 2.5;
-		this.fechaCreacion = fechaCreacion;
+		this.fechaCreacion = LocalDate.now();
 		numeroCuentas++;
 	}
+	//Getter y setter
 	
 	public String getNumeroCuenta() {
 		return numeroCuenta;
@@ -39,15 +51,14 @@ public class CuentaBancaria {
 	public void setInteres(double interes) {
 		this.interes = interes;
 	}
-	public int getFechaCreacion() {
+	
+	public LocalDate getFechaCreacion() {
 		return fechaCreacion;
-	}
-	public void setFechaCreacion(int fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
 	}
 	public static int getNumeroCuentas() {
 		return numeroCuentas;
 	}
+	//Añadir y retirar dinero
 	
 	private double depositarDinero(double dinero){
 	return	saldo+=dinero;
@@ -59,28 +70,95 @@ public class CuentaBancaria {
 		}
 		return dinerototal;
 	}
-	private String generarnumeroCuenta(){
-		String entidad="1234";
-		String oficina="5678";
-		int [] array={4,8,5,10,9,7,3,6};
-		int digitoControl=0;
-		for (int i = 0; i < entidad.length(); i++) {
-			digitoControl+=entidad.charAt(i)*array[i];
-		}
-		
-		
-		String resultado=entidad+"-"+oficina+"-"+digitoControl;
-		return resultado;
+	
+	//Crear numeroCuenta 10
+	private String crearNumeroCuenta(){
+		int numero;
+		String numeroCuenta="";	
+		for (int i = 0; i < 10; i++) {
+			 numero=(int) (Math.random()*10);
+			numeroCuenta+=numero;
+				}
+		return numeroCuenta;
 	}
+	
+	private int primerNumeroControl(){
+		int [] array1={4,8,5,10,9,7,3,6};
+		int primerDigito=0;
+		int contador=0;
+		for (int i = 0; i < entidad.length(); i++) {
+			primerDigito+=Character.digit(entidad.charAt(i),10)*array1[i];
+			contador++;
+			//el problema es que con charat obtenemos el valor unicode de entidad
+			//Para ello usamos Character.digit para solucionarlo
+		}
+		int cont2=0;
+		for (int i = contador+1; i < array1.length; i++) {
+			
+			primerDigito+=Character.digit(oficina.charAt(cont2),10)*array1[i];
+		}
+		primerDigito=11-(primerDigito%11);
+		if (primerDigito==10)
+			return 1;
+		if (primerDigito==11) {
+			return 0;
+		}
+		return primerDigito;
+	}
+	private int segundoNumeroControl(){
+		
+		int [] array2={1,2,4,8,5,10,9,7,3,6};
+		int cifra=0;
+		int segundoDigito=0;
+		for (int i = 0; i < array2.length; i++) {
+			
+			segundoDigito+=Character.digit(cc.charAt(i),10)*array2[i];
+			
+		}
+		segundoDigito=11-(segundoDigito%11);
+		if (segundoDigito==10)
+			return 1;
+		if (segundoDigito==11) {
+			return 0;
+		}
+		return segundoDigito;
+	}
+	
+	private String numeroCuenta(){
+		return entidad+"-"+this.oficina+"-"+primerNumeroControl()+segundoNumeroControl()+"-"+this.cc;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "CuentaBancaria [numeroCuenta=" + numeroCuenta + ", saldo="
-				+ saldo + "]";
+				+ saldo + ", interes=" + interes + ", fechaCreacion="
+				+ fechaCreacion + "]";
 	}
-	
-	public static void main(String[] args) {
-		CuentaBancaria c1=new CuentaBancaria(25, 2.5, 15151500);
-		System.out.println(c1.generarnumeroCuenta());
-	}	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((numeroCuenta == null) ? 0 : numeroCuenta.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CuentaBancaria other = (CuentaBancaria) obj;
+		if (numeroCuenta == null) {
+			if (other.numeroCuenta != null)
+				return false;
+		} else if (!numeroCuenta.equals(other.numeroCuenta))
+			return false;
+		return true;
+	}
+
 	
 }
