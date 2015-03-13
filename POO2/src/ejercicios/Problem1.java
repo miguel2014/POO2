@@ -1,3 +1,4 @@
+package ejercicios;
 
 public class Problem1 {
 	static String s;
